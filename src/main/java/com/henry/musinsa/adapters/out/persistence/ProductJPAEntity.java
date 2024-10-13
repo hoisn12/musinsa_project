@@ -21,11 +21,14 @@ public class ProductJPAEntity extends CommonEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "price")
-    private String price;
+    @Column(name = "price", columnDefinition = "0.0")
+    private Double price;
 
-    @Column(name = "sale_price")
-    private String salePrice;
+    @Column(name = "sale_price", columnDefinition = "0.0")
+    private Double salePrice;
+
+    @Column(name = "is_del", columnDefinition = "false")
+    private boolean isDel;
 
     @ManyToOne
     @JoinColumn(name = "brand_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))

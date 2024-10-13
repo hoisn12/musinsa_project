@@ -1,8 +1,7 @@
 package com.henry.musinsa.adapters.in.web;
 
 
-import com.henry.musinsa.ports.in.ProductUseCase;
-import lombok.Getter;
+import com.henry.musinsa.ports.in.ProductQueryUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductUseCase productUseCase;
+    private final ProductQueryUseCase productUseCase;
 
     @GetMapping
     public ResponseEntity<?> getProductAll() {

@@ -9,8 +9,8 @@ public class Product {
 
     private Long id;
     private String title;
-    private String price;
-    private String salePrice;
+    private Double price;
+    private Double salePrice;
     private Long brandId;
     private Long categoryId;
     private Brand brand;

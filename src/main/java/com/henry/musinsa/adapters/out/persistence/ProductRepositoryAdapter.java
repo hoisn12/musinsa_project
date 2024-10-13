@@ -2,6 +2,8 @@ package com.henry.musinsa.adapters.out.persistence;
 
 import com.henry.musinsa.adapters.out.persistence.mappers.ProductMapper;
 import com.henry.musinsa.adapters.out.persistence.repository.ProductJpaRepository;
+import com.henry.musinsa.application.dto.CategoryPriceDTO;
+import com.henry.musinsa.application.dto.CategoryPriceSummaryDTO;
 import com.henry.musinsa.domain.Product;
 import com.henry.musinsa.ports.out.ProductRepository;
 import java.util.List;
@@ -35,5 +37,14 @@ public class ProductRepositoryAdapter implements ProductRepository {
         ProductJPAEntity productJPAEntity = productMapper.toEntity(product);
         ProductJPAEntity savedEntity = productJpaRepository.save(productJPAEntity);
         return productMapper.toDomain(savedEntity);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CategoryPriceSummaryDTO findLowestPriceProductByCategory() {
+        List<CategoryPriceDTO> categoryPriceDTOList = productJpaRepository.findLowestPriceProductByCategory();
+        Double sumPrice = categoryPriceDTOList.stream().mapToDouble(CategoryPriceDTO::price).sum();
+
+        return CategoryPriceSummaryDTO.builder().categoryPriceDTOList(categoryPriceDTOList).sumPrice(sumPrice).build();
     }
 }
