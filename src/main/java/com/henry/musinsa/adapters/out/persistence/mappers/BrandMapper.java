@@ -1,7 +1,7 @@
 package com.henry.musinsa.adapters.out.persistence.mappers;
 
-import com.henry.musinsa.adapters.out.persistence.entity.ProductJPAEntity;
-import com.henry.musinsa.domain.Product;
+import com.henry.musinsa.adapters.out.persistence.entity.BrandJPAEntity;
+import com.henry.musinsa.domain.Brand;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -14,14 +14,13 @@ import org.mapstruct.factory.Mappers;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         builder = @Builder,
         imports = {LocalDateTime.class, DateTimeFormatter.class})
-public interface ProductMapper {
-    ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
+public interface BrandMapper {
+    BrandMapper INSTANCE = Mappers.getMapper(BrandMapper.class);
 
-    Product toDomain(ProductJPAEntity productJPAEntity);
-    List<Product> toDomain(List<ProductJPAEntity> productJPAEntityList);
+    Brand toDomain(BrandJPAEntity brandJPAEntity);
+    List<Brand> toDomain(List<BrandJPAEntity> brandJPAEntityList);
 
-    ProductJPAEntity toEntity(Product product);
-    List<ProductJPAEntity> toEntity(List<Product> productList);
-
+    BrandJPAEntity toEntity(Brand brand);
+    List<BrandJPAEntity> toEntity(List<Brand> brandList);
 
 }

@@ -2,20 +2,32 @@ package com.henry.musinsa.domain;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
 
 @Getter
 @Builder
 public class Brand {
 
-    private Long seq;
+    private String id;
     private String title;
     private String description;
-    private boolean isDel;
+    @Default
+    private Boolean isDel = false;
     private LocalDate joinDate;
     private LocalDate endDate;
     private String country;
-    private boolean isLocalDelivery;
-    private boolean isPrivateBrand;
+    private Long creatorId;
+    @Default
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private Long updaterId;
+    @Default
+    private LocalDateTime updatedAt = LocalDateTime.now();
+
+    @Default
+    private boolean isLocalDelivery = true;
+    @Default
+    private boolean isPrivateBrand = false;
 }

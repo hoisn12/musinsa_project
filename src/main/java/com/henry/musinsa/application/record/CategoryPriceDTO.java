@@ -1,4 +1,4 @@
-package com.henry.musinsa.application.dto;
+package com.henry.musinsa.application.record;
 
 import lombok.Builder;
 
@@ -6,7 +6,6 @@ import lombok.Builder;
 public record CategoryPriceDTO(
         String categoryTitle,
         String brandTitle,
-        Double price,
-        Double sumPrice
+        Double price
 ) {
 }

@@ -1,6 +1,9 @@
 
 
 spring:
+  config:
+    activate:
+      on-profile: local
   h2:
     console:
       enabled: true
@@ -11,3 +14,12 @@ spring:
     url: jdbc:h2:~/musinsa
     username: muser
     password: muser
+  jpa:
+    hibernate:
+      ddl-auto: update #validate : table 검증
+    properties:
+      hibernate:
+        show_sql: true
+logging:
+  level:
+    root: INFO
