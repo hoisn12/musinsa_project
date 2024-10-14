@@ -27,8 +27,8 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     @Override
     @Transactional(readOnly = true)
     public Optional<User> findById(Long id) {
-        Optional<UserJPAEntity> productJPAEntity = userJpaRepository.findById(id);
-        return productJPAEntity.map(userMapper::toDomain);
+        Optional<UserJPAEntity> userJPAEntity = userJpaRepository.findById(id);
+        return userJPAEntity.map(userMapper::toDomain);
     }
 
     @Override

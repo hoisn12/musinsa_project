@@ -27,14 +27,14 @@ public class BrandRepositoryAdapter implements BrandRepositoryPort {
     @Override
     @Transactional(readOnly = true)
     public Optional<Brand> findById(String id) {
-        Optional<BrandJPAEntity> productJPAEntity = brandJpaRepository.findById(id);
-        return productJPAEntity.map(brandMapper::toDomain);
+        Optional<BrandJPAEntity> brandJPAEntity = brandJpaRepository.findById(id);
+        return brandJPAEntity.map(brandMapper::toDomain);
     }
 
     @Override
-    public Brand save(Brand productCategory) {
-        BrandJPAEntity productCategoryJPAEntity = brandMapper.toEntity(productCategory);
-        BrandJPAEntity savedEntity = brandJpaRepository.save(productCategoryJPAEntity);
+    public Brand save(Brand brand) {
+        BrandJPAEntity brandJPAEntity = brandMapper.toEntity(brand);
+        BrandJPAEntity savedEntity = brandJpaRepository.save(brandJPAEntity);
         return brandMapper.toDomain(savedEntity);
     }
 

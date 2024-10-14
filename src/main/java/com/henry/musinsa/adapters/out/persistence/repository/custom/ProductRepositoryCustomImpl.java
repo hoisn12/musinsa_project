@@ -10,6 +10,7 @@ import com.henry.musinsa.adapters.out.persistence.entity.ProductJPAEntity;
 
 import com.henry.musinsa.adapters.out.persistence.entity.QBrandJPAEntity;
 import com.henry.musinsa.adapters.out.persistence.entity.QProductJPAEntity;
+import com.henry.musinsa.application.record.BrandSumPriceDTO;
 import com.henry.musinsa.application.record.CategoryPriceDTO;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
@@ -34,7 +35,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                         Projections.constructor(
                                 CategoryPriceDTO.class,
                                 productCategoryJPAEntity.title.as("categoryTitle"),
-                                brandJPAEntity.title.as("brandTitle"),
+                                brandJPAEntity.title.max().as("brandTitle"),
                                 productJPAEntity.salePrice.as("price")
                         )
                 )
@@ -42,26 +43,47 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                 .where(productJPAEntity.category.eq(productCategoryJPAEntity))
                 .where(productJPAEntity.brand.eq(brandJPAEntity))
                 .where(productJPAEntity.isDel.isFalse())
-                .where(productJPAEntity.id.eq(
-                        JPAExpressions.select(productSub.id)
+                .where(productJPAEntity.price.eq(
+                        JPAExpressions.select(productSub.price.min())
                         .from(productSub)
                         .join(productSub.brand, brandSub)
                         .where(productSub.isDel.isFalse())
                         .where(productSub.category.eq(productCategoryJPAEntity))
-                        .groupBy(productSub.salePrice.min())
+                        .groupBy(productSub.category)
                         ))
+                .groupBy(productCategoryJPAEntity.title, productJPAEntity.salePrice )
                 .fetch();
     }
 
     @Override
-    public BrandJPAEntity findBrandWithLowestTotalPrice() {
-//        return queryFactory.selectFrom()
-        return null;
+    public BrandSumPriceDTO findBrandWithLowestTotalPrice() {
+        return queryFactory.select(
+                    Projections.constructor(
+                            BrandSumPriceDTO.class,
+                            brandJPAEntity.id,
+                            brandJPAEntity.title,
+                            productJPAEntity.salePrice.sum()
+                    )
+                )
+                .from(productJPAEntity)
+                .join(productJPAEntity.brand, brandJPAEntity)
+                .where(productJPAEntity.isDel.isFalse())
+                .where(brandJPAEntity.isDel.isFalse())
+                .groupBy(brandJPAEntity.id,brandJPAEntity.title)
+                .orderBy(productJPAEntity.salePrice.sum().asc())
+                .limit(1)
+                .fetchOne();
     }
 
     @Override
-    public List<ProductJPAEntity> findLowestPriceForAllCategoriesByBrand() {
-        return List.of();
+    public List<ProductJPAEntity> findLowestPriceForAllCategoriesByBrand(String brandId) {
+        return queryFactory.selectFrom(productJPAEntity)
+                .join(productJPAEntity.category, productCategoryJPAEntity)
+                .fetchJoin()
+                .where(productJPAEntity.brand.id.eq(brandId))
+                .where(productJPAEntity.brand.isDel.isFalse())
+                .where(productJPAEntity.isDel.isFalse())
+                .fetch();
     }
 
     @Override

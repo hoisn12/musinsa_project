@@ -27,8 +27,8 @@ public class ProductCategoryRepositoryAdapter implements ProductCategoryReposito
     @Override
     @Transactional(readOnly = true)
     public Optional<ProductCategory> findById(String id) {
-        Optional<ProductCategoryJPAEntity> productJPAEntity = productCategoryJpaRepository.findById(id);
-        return productJPAEntity.map(productCategoryMapper::toDomain);
+        Optional<ProductCategoryJPAEntity> productCategoryJPAEntity = productCategoryJpaRepository.findById(id);
+        return productCategoryJPAEntity.map(productCategoryMapper::toDomain);
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Builder
 public record CategoryPriceSummaryDTO (
-        List<CategoryPriceDTO> categoryPriceDTOList,
+        List<CategoryPriceDTO> categoryPriceList,
         Double sumPrice
 ) {
 }

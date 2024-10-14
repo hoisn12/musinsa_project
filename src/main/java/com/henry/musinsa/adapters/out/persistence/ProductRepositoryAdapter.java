@@ -3,6 +3,7 @@ package com.henry.musinsa.adapters.out.persistence;
 import com.henry.musinsa.adapters.out.persistence.entity.ProductJPAEntity;
 import com.henry.musinsa.adapters.out.persistence.mappers.ProductMapper;
 import com.henry.musinsa.adapters.out.persistence.repository.ProductJpaRepository;
+import com.henry.musinsa.application.record.BrandSumPriceDTO;
 import com.henry.musinsa.application.record.CategoryPriceDTO;
 import com.henry.musinsa.application.record.CategoryPriceSummaryDTO;
 import com.henry.musinsa.domain.Product;
@@ -54,6 +55,20 @@ public class ProductRepositoryAdapter implements ProductRepositoryPort {
         List<CategoryPriceDTO> categoryPriceDTOList = productJpaRepository.findLowestPriceByCategoryAndBrand();
         Double sumPrice = categoryPriceDTOList.stream().mapToDouble(CategoryPriceDTO::price).sum();
 
-        return CategoryPriceSummaryDTO.builder().categoryPriceDTOList(categoryPriceDTOList).sumPrice(sumPrice).build();
+        return CategoryPriceSummaryDTO.builder().categoryPriceList(categoryPriceDTOList).sumPrice(sumPrice).build();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public BrandSumPriceDTO findBrandWithLowestTotalPrice() {
+        return productJpaRepository.findBrandWithLowestTotalPrice();
+    }
+
+    @Override
+    public List<Product> findLowestPriceForAllCategoriesByBrand(String brandId) {
+        List<ProductJPAEntity> productJPAEntityList = productJpaRepository.findLowestPriceForAllCategoriesByBrand(brandId);
+
+        return productMapper.toDomain(productJPAEntityList);
+    }
+
 }

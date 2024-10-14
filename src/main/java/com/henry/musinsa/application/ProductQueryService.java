@@ -1,9 +1,14 @@
 package com.henry.musinsa.application;
 
+import com.henry.musinsa.application.record.BrandSumPriceDTO;
+import com.henry.musinsa.application.record.BrandSumPriceSummaryDTO;
+import com.henry.musinsa.application.record.CategoryPriceDTO;
 import com.henry.musinsa.application.record.CategoryPriceSummaryDTO;
 import com.henry.musinsa.domain.Product;
 import com.henry.musinsa.ports.in.ProductQueryUseCase;
 import com.henry.musinsa.ports.out.ProductRepositoryPort;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +40,22 @@ public class ProductQueryService implements ProductQueryUseCase {
     }
 
     @Override
-    public List<Product> getLowestPriceForAllCategoriesByBrand() {
-        return List.of();
+    public BrandSumPriceSummaryDTO getLowestPriceForAllCategoriesByBrand() {
+        BrandSumPriceDTO lowestBrand = productRepository.findBrandWithLowestTotalPrice();
+        List<Product> productList = productRepository.findLowestPriceForAllCategoriesByBrand(lowestBrand.brandId());
+
+        List<CategoryPriceDTO> categoryPriceDTOList = new ArrayList<>();
+        for(Product product : productList) {
+            categoryPriceDTOList.add(CategoryPriceDTO.builder()
+                    .categoryTitle(product.getCategory().getTitle())
+                    .price(product.getSalePrice())
+                    .build());
+        }
+        return BrandSumPriceSummaryDTO.builder()
+                .brandTitle(lowestBrand.brandTitle())
+                .sumPrice(lowestBrand.sumPrice())
+                .categoryPriceList(categoryPriceDTOList)
+                .build();
     }
 
     @Override
