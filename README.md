@@ -4,19 +4,29 @@
 ### database: H2
 ### java: 17
 
-### 설명
+## 설명
 - 폴더 구조는 포트어댑터(핵사고날) 아키텍처 기반으로 설계하였습니다.
 - 추상화를 통해 확장성 및 유연하게 변경가능한 아키텍처라고 생각되어 채택하였습니다.
 - 상품 테이블, 브랜드 테이블, 카테고리 테이블이 있으며, 상품은 price(원가), sale_price(할인가) 가 있고 sale_price 기준으로 계산되었습니다.
 - 삭제는 실제 row 삭제가 아닌 flag 를 통해 관리됩니다.
 - spring boot 3, JPA, queryDSL, mapStruct 가 사용되었습니다.
 
-빌드방법: 소스 폴더에서 ./gradlew build 
+## 빌드방법
+```
+./gradlew build
+``` 
 
-실행방법: java -jar ./build/libs/musinsa-0.0.1-SNAPSHOT.jar  
+## 실행방법
+```
+java -jar ./build/libs/musinsa-0.0.1-SNAPSHOT.jar  
+```
 
-테스트방법: 상품 데이터는 Application 실행시 자동으로 H2 database에 등록됩니다. 각 API들을 호출하시기만 하면 됩니다.
+## 테스트방법
+```
+상품 데이터는 Application 실행시 자동으로 H2 database에 등록됩니다. 
+각 API들을 호출하시기만 하면 됩니다.
 브랜드/상품 수정의 경우 생성 후 return 되는 id로 수정을 해주셔야합니다.
+```
 
 ### 디렉터리 구조
 #### adapters
