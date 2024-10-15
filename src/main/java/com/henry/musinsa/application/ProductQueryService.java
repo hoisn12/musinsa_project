@@ -1,6 +1,8 @@
 package com.henry.musinsa.application;
 
 import com.henry.musinsa.application.dto.*;
+import com.henry.musinsa.common.ErrorCode;
+import com.henry.musinsa.common.exception.ApplicationException;
 import com.henry.musinsa.domain.Product;
 import com.henry.musinsa.ports.in.ProductQueryUseCase;
 import com.henry.musinsa.ports.out.ProductCategoryRepositoryPort;
@@ -60,6 +62,9 @@ public class ProductQueryService implements ProductQueryUseCase {
 
     @Override
     public ProductLowestAndHighestResponseDTO getLowestAndHighestPriceBrandsByCategory(String categoryName) {
+
+        productCategoryRepositoryPort.findByTitle(categoryName).orElseThrow(() -> new ApplicationException(ErrorCode.PRODUCT_CATEGORY_NOT_FOUND));
+
         List<Product> minProductList = productRepository.findMinPriceProductsByCategoryName(categoryName);
         List<Product> maxProductList = productRepository.findMaxPriceProductsByCategoryName(categoryName);
 

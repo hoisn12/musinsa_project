@@ -51,4 +51,11 @@ public class ProductCategoryRepositoryAdapter implements ProductCategoryReposito
         productCategoryJpaRepository.flush();
     }
 
+    @Override
+    public Optional<ProductCategory> findByTitle(String title) {
+        Optional<ProductCategoryJPAEntity> productCategoryJPAEntity = productCategoryJpaRepository.findByTitle(title);
+        return productCategoryJPAEntity.map(productCategoryMapper::toDomain);
+    }
+
+
 }
