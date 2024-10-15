@@ -30,11 +30,15 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductCreateDTO productCreateDTO) {
+        // 카테고리 조회
         ProductCategory productCategory = productCategoryQueryUseCase.getProductCategory(productCreateDTO.getCategoryId());
+        // 브랜드 조회
         Brand brand = brandQueryUseCase.getBrand(productCreateDTO.getBrandId());
+        // 상품 생성
         productCreateDTO.setBrand(brand);
         productCreateDTO.setCategory(productCategory);
         Product result = productCommandUseCase.createProduct(productCreateDTO);
+        // 반환
         return ResEntity.success(productCommandMapper.toCreateResponse(result, brand, productCategory));
     }
 
@@ -50,7 +54,7 @@ public class ProductController {
 
     @GetMapping("/prices/lowest/category")
     public ResponseEntity<?> getLowestPriceByCategoryAndBrand() {
-        CategoryPriceSummaryDTO categoryPriceSummaryDTO = productUseCase.getLowestPriceByCategoryAndBrandUseCase();
+        CategoryPriceSummaryDTO categoryPriceSummaryDTO = productUseCase.getLowestPriceByCategoryAndBrand();
         return ResEntity.success(categoryPriceSummaryDTO);
     }
 

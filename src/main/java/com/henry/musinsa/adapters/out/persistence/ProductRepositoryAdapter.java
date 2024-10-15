@@ -57,7 +57,8 @@ public class ProductRepositoryAdapter implements ProductRepositoryPort {
         List<CategoryPriceDTO> categoryPriceDTOList = productJpaRepository.findLowestPriceByCategoryAndBrand();
         Double sumPrice = categoryPriceDTOList.stream().mapToDouble(CategoryPriceDTO::price).sum();
 
-        return CategoryPriceSummaryDTO.builder().categoryPriceList(categoryPriceDTOList).sumPrice(sumPrice).build();
+        return CategoryPriceSummaryDTO.builder().categoryPriceList(categoryPriceDTOList)
+                .sumPrice(sumPrice).build();
     }
 
     @Override

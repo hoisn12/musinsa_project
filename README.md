@@ -1,4 +1,4 @@
-# musinsa_project
+# musinsa project
 
 ### 환경
 ### database: H2

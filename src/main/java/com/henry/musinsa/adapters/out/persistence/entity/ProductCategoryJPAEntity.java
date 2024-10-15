@@ -37,6 +37,7 @@ public class ProductCategoryJPAEntity extends CommonEntity {
 
     @Column(name = "title")
     private String title;
+
     @Builder.Default
     @Version
     private Long version = 0L;

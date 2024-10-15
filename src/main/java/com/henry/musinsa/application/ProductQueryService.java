@@ -35,7 +35,7 @@ public class ProductQueryService implements ProductQueryUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public CategoryPriceSummaryDTO getLowestPriceByCategoryAndBrandUseCase() {
+    public CategoryPriceSummaryDTO getLowestPriceByCategoryAndBrand() {
         return productRepository.findLowestPriceByCategoryAndBrand();
     }
 
@@ -51,11 +51,11 @@ public class ProductQueryService implements ProductQueryUseCase {
                     .price(product.getSalePrice())
                     .build());
         }
-        return BrandSumPriceSummaryDTO.builder()
+        return BrandSumPriceSummaryDTO.builder().minPrice(BrandSumPriceSummaryDTO.MinPrice.builder()
                 .brandTitle(lowestBrand.brandTitle())
                 .sumPrice(lowestBrand.sumPrice())
                 .categoryPriceList(categoryPriceDTOList)
-                .build();
+                .build()).build();
     }
 
     @Override
