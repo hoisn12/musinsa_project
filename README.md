@@ -11,7 +11,7 @@
 상품 데이터는 app 실행시 자동으로 H2 database에 등록됩니다.
 
 
-구현 API
+### 구현 API
 카테고리 별 최저가격 브랜드와 상품 가격, 총액을 조회하는 API
 - GET http://localhost:8081/api/products/prices/lowest/category
 
