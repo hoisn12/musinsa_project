@@ -15,4 +15,5 @@ public interface ProductRepositoryCustom {
     BrandSumPriceDTO findBrandWithLowestTotalPrice();
     List<ProductJPAEntity> findLowestPriceForAllCategoriesByBrand(String brandId);
     List<ProductJPAEntity> findLowestAndHighestPriceBrandsByCategory();
+    Long updateProduct(ProductJPAEntity updateProductJPAEntity);
 }

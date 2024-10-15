@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,47 +22,45 @@ public class ProductCommandService implements ProductCommandUseCase {
     private final ProductRepositoryPort productRepository;
 
     @Override
+    @Transactional
     public Product createProduct(ProductCreateDTO productCreateDTO) {
         if(null == productCreateDTO) {
             throw new ApplicationException(ErrorCode.CREATE_PRODUCT_DATA_EMPTY);
         }
 
         Product createProduct = Product.builder()
-                .title(productCreateDTO.title())
-                .price(productCreateDTO.price())
-                .salePrice(productCreateDTO.salePrice())
-                .brand(productCreateDTO.brand())
-                .category(productCreateDTO.category())
+                .title(productCreateDTO.getTitle())
+                .price(productCreateDTO.getPrice())
+                .salePrice(productCreateDTO.getSalePrice())
+                .brand(productCreateDTO.getBrand())
+                .category(productCreateDTO.getCategory())
                 .build();
         return productRepository.save(createProduct);
     }
 
     @Override
+    @Transactional
     public Product updateProduct(ProductUpdateDTO productUpdateDTO) {
         if(null == productUpdateDTO) {
             throw new ApplicationException(ErrorCode.CREATE_BRAND_DATA_EMPTY);
         }
 
-        productRepository.findActiveProductById(productUpdateDTO.id()).orElseThrow(() -> new ApplicationException(ErrorCode.PRODUCT_NOT_FOUND));
+        productRepository.findActiveProductById(productUpdateDTO.getId()).orElseThrow(() -> new ApplicationException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        try {
+        Product updateProduct = Product.builder()
+                .id(productUpdateDTO.getId())
+                .title(productUpdateDTO.getTitle())
+                .price(productUpdateDTO.getPrice())
+                .salePrice(productUpdateDTO.getSalePrice())
+                .brand(productUpdateDTO.getBrand())
+                .category(productUpdateDTO.getCategory())
+                .build();
 
-            Product updateProduct = Product.builder()
-                    .id(productUpdateDTO.id())
-                    .title(productUpdateDTO.title())
-                    .price(productUpdateDTO.price())
-                    .salePrice(productUpdateDTO.salePrice())
-                    .brand(productUpdateDTO.brand())
-                    .category(productUpdateDTO.category())
-                    .build();
-
-            return productRepository.save(updateProduct);
-        } catch (ParseException e) {
-            throw new ApplicationException(ErrorCode.DATE_FORMAT_MISMATCH);
-        }
+        return productRepository.save(updateProduct);
     }
 
     @Override
+    @Transactional
     public void deleteProduct(String productId) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new ApplicationException(ErrorCode.PRODUCT_NOT_FOUND));
         product.delete();

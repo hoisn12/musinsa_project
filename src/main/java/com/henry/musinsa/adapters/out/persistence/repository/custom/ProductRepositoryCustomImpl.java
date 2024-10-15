@@ -90,4 +90,13 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     public List<ProductJPAEntity> findLowestAndHighestPriceBrandsByCategory() {
         return List.of();
     }
+
+    @Override
+    public Long updateProduct(ProductJPAEntity updateProductEntity) {
+        return queryFactory.update(productJPAEntity)
+                .set(productJPAEntity, updateProductEntity)
+                .where(productJPAEntity.id.eq(updateProductEntity.getId()))
+                .where(productJPAEntity.isDel.isFalse())
+                .execute();
+    }
 }

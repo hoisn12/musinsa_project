@@ -16,7 +16,9 @@ public enum ErrorCode {
     BRAND_NOT_FOUND("2001", "brand not found"),
 
     CREATE_PRODUCT_DATA_EMPTY("3000", "create product data body empty"),
-    PRODUCT_NOT_FOUND("3001", "product not found");
+    PRODUCT_NOT_FOUND("3001", "product not found"),
+
+    PRODUCT_CATEGORY_NOT_FOUND("4001", "product category not found");
 
 
     private final String code;

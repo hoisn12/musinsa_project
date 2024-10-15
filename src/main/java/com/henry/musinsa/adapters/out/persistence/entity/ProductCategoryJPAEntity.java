@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -36,5 +37,8 @@ public class ProductCategoryJPAEntity extends CommonEntity {
 
     @Column(name = "title")
     private String title;
+
+    @Version
+    private Long version;
     
 }

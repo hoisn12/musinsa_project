@@ -3,6 +3,12 @@ package com.henry.musinsa.adapters.in.web;
 
 import com.henry.musinsa.application.record.BrandSumPriceSummaryDTO;
 import com.henry.musinsa.application.record.CategoryPriceSummaryDTO;
+import com.henry.musinsa.application.record.ProductCreateDTO;
+import com.henry.musinsa.application.record.ProductUpdateDTO;
+import com.henry.musinsa.domain.Brand;
+import com.henry.musinsa.domain.ProductCategory;
+import com.henry.musinsa.ports.in.BrandQueryUseCase;
+import com.henry.musinsa.ports.in.ProductCategoryQueryUseCase;
 import com.henry.musinsa.ports.in.ProductQueryUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
     private final ProductQueryUseCase productUseCase;
+    private final ProductCategoryQueryUseCase productCategoryQueryUseCase;
+    private final BrandQueryUseCase brandQueryUseCase;
 
     @GetMapping
     public ResponseEntity<?> getProductAll() {
@@ -35,12 +43,14 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createProduct() {
+    public ResponseEntity<?> createProduct(ProductCreateDTO productCreateDTO) {
+        ProductCategory productCategory = productCategoryQueryUseCase.getProductCategory(productCreateDTO.getCategoryId());
+        Brand brand = brandQueryUseCase.getBrand(productCreateDTO.getBrandId());
         return ResEntity.success();
     }
 
     @PutMapping
-    public ResponseEntity<?> updateProduct() {
+    public ResponseEntity<?> updateProduct(ProductUpdateDTO productUpdateDTO) {
         return ResEntity.success();
     }
 

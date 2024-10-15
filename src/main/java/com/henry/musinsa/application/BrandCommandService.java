@@ -26,13 +26,13 @@ public class BrandCommandService implements BrandCommandUseCase {
         }
 
         try {
-            LocalDate joinDate = StringCustomUtils.getLocalDateForgetFormatter(brandCreateDTO.joinDate());
+            LocalDate joinDate = StringCustomUtils.getLocalDateForgetFormatter(brandCreateDTO.getJoinDate());
 
             Brand createBrand = Brand.builder()
-                    .title(brandCreateDTO.title())
+                    .title(brandCreateDTO.getTitle())
                     .joinDate(joinDate)
-                    .isPrivateBrand(brandCreateDTO.isPrivateBrand())
-                    .isLocalDelivery(brandCreateDTO.isLocalDelivery()).build();
+                    .isPrivateBrand(brandCreateDTO.getIsPrivateBrand())
+                    .isLocalDelivery(brandCreateDTO.getIsLocalDelivery()).build();
             return brandRepository.save(createBrand);
         } catch (ParseException e) {
             throw new ApplicationException(ErrorCode.DATE_FORMAT_MISMATCH);
@@ -45,17 +45,17 @@ public class BrandCommandService implements BrandCommandUseCase {
             throw new ApplicationException(ErrorCode.CREATE_BRAND_DATA_EMPTY);
         }
 
-        brandRepository.findActiveBrandById(brandUpdateDTO.id()).orElseThrow(() -> new ApplicationException(ErrorCode.BRAND_NOT_FOUND));
+        brandRepository.findActiveBrandById(brandUpdateDTO.getId()).orElseThrow(() -> new ApplicationException(ErrorCode.BRAND_NOT_FOUND));
 
         try {
-            LocalDate joinDate = StringCustomUtils.getLocalDateForgetFormatter(brandUpdateDTO.joinDate());
+            LocalDate joinDate = StringCustomUtils.getLocalDateForgetFormatter(brandUpdateDTO.getJoinDate());
 
             Brand createBrand = Brand.builder()
-                    .id(brandUpdateDTO.id())
-                    .title(brandUpdateDTO.title())
+                    .id(brandUpdateDTO.getId())
+                    .title(brandUpdateDTO.getTitle())
                     .joinDate(joinDate)
-                    .isPrivateBrand(brandUpdateDTO.isPrivateBrand())
-                    .isLocalDelivery(brandUpdateDTO.isLocalDelivery()).build();
+                    .isPrivateBrand(brandUpdateDTO.getIsPrivateBrand())
+                    .isLocalDelivery(brandUpdateDTO.getIsLocalDelivery()).build();
             return brandRepository.save(createBrand);
         } catch (ParseException e) {
             throw new ApplicationException(ErrorCode.DATE_FORMAT_MISMATCH);

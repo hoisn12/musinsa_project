@@ -51,4 +51,6 @@ public class ProductJPAEntity extends CommonEntity {
     @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private ProductCategoryJPAEntity category;
 
+    @Version
+    private Long version;
 }

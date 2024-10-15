@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import java.time.LocalDate;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -66,4 +67,7 @@ public class BrandJPAEntity extends CommonEntity {
     @Comment("자체 브랜드 여부")
     @Column(name = "is_private_brand")
     private Boolean isPrivateBrand;
+
+    @Version
+    private Long version;
 }
