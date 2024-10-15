@@ -1,4 +1,4 @@
-package com.henry.musinsa.application.record;
+package com.henry.musinsa.application.dto;
 
 import lombok.Builder;
 

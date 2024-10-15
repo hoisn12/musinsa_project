@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: musinsa project
+  profiles:
+    active: local
   hikari:
     data-source-properties:
       rewriteBatchedInserts: true

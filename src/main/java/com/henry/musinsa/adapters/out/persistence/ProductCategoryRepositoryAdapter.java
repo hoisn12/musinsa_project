@@ -42,7 +42,13 @@ public class ProductCategoryRepositoryAdapter implements ProductCategoryReposito
     public List<ProductCategory> saveAll(List<ProductCategory> productCategoryList) {
         List<ProductCategoryJPAEntity> productCategoryJPAEntityList = productCategoryMapper.toEntity(productCategoryList);
         List<ProductCategoryJPAEntity> savedEntityList = productCategoryJpaRepository.saveAll(productCategoryJPAEntityList);
+        productCategoryJpaRepository.flush();
         return productCategoryMapper.toDomain(savedEntityList);
+    }
+
+    @Override
+    public void flush() {
+        productCategoryJpaRepository.flush();
     }
 
 }

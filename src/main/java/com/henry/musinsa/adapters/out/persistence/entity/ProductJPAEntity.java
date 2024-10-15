@@ -43,14 +43,15 @@ public class ProductJPAEntity extends CommonEntity {
     @Column(name = "is_del", columnDefinition = "boolean default false")
     private Boolean isDel = false;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "brand_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private BrandJPAEntity brand;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private ProductCategoryJPAEntity category;
 
+    @Default
     @Version
-    private Long version;
+    private Long version = 0L;
 }

@@ -1,7 +1,7 @@
 package com.henry.musinsa.ports.in;
 
-import com.henry.musinsa.application.record.ProductCreateDTO;
-import com.henry.musinsa.application.record.ProductUpdateDTO;
+import com.henry.musinsa.application.dto.ProductCreateDTO;
+import com.henry.musinsa.application.dto.ProductUpdateDTO;
 import com.henry.musinsa.domain.Product;
 
 

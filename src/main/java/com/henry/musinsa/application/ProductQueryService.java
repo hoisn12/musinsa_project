@@ -1,11 +1,9 @@
 package com.henry.musinsa.application;
 
-import com.henry.musinsa.application.record.BrandSumPriceDTO;
-import com.henry.musinsa.application.record.BrandSumPriceSummaryDTO;
-import com.henry.musinsa.application.record.CategoryPriceDTO;
-import com.henry.musinsa.application.record.CategoryPriceSummaryDTO;
+import com.henry.musinsa.application.dto.*;
 import com.henry.musinsa.domain.Product;
 import com.henry.musinsa.ports.in.ProductQueryUseCase;
+import com.henry.musinsa.ports.out.ProductCategoryRepositoryPort;
 import com.henry.musinsa.ports.out.ProductRepositoryPort;
 
 import java.util.ArrayList;
@@ -21,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductQueryService implements ProductQueryUseCase {
 
     private final ProductRepositoryPort productRepository;
+    private final ProductCategoryRepositoryPort productCategoryRepositoryPort;
+
 
     @Override
     @Cacheable(value = "products")
@@ -59,7 +59,31 @@ public class ProductQueryService implements ProductQueryUseCase {
     }
 
     @Override
-    public List<Product> getLowestAndHighestPriceBrandsByCategory() {
-        return List.of();
+    public ProductLowestAndHighestResponseDTO getLowestAndHighestPriceBrandsByCategory(String categoryName) {
+        List<Product> minProductList = productRepository.findMinPriceProductsByCategoryName(categoryName);
+        List<Product> maxProductList = productRepository.findMaxPriceProductsByCategoryName(categoryName);
+
+        String title = minProductList.get(0).getCategory().getTitle();
+
+        List<ProductLowestAndHighestResponseDTO.BrandPrice> minBrandList = new ArrayList<>();
+        List<ProductLowestAndHighestResponseDTO.BrandPrice> maxBrandList = new ArrayList<>();
+
+        for(Product product : minProductList) {
+            minBrandList.add(ProductLowestAndHighestResponseDTO.BrandPrice.builder()
+                    .brandName(product.getBrand().getTitle())
+                    .price(product.getPrice()).build());
+        }
+        for(Product product : maxProductList) {
+            maxBrandList.add(ProductLowestAndHighestResponseDTO.BrandPrice.builder()
+                    .brandName(product.getBrand().getTitle())
+                    .price(product.getPrice()).build());
+        }
+
+        return ProductLowestAndHighestResponseDTO.builder()
+                .categoryName(title)
+                .maxPrice(maxBrandList)
+                .minPrice(minBrandList)
+                .build();
+
     }
 }

@@ -1,12 +1,11 @@
 package com.henry.musinsa.adapters.out.persistence;
 
-import com.henry.musinsa.adapters.out.persistence.entity.BrandJPAEntity;
 import com.henry.musinsa.adapters.out.persistence.entity.ProductJPAEntity;
 import com.henry.musinsa.adapters.out.persistence.mappers.ProductMapper;
 import com.henry.musinsa.adapters.out.persistence.repository.ProductJpaRepository;
-import com.henry.musinsa.application.record.BrandSumPriceDTO;
-import com.henry.musinsa.application.record.CategoryPriceDTO;
-import com.henry.musinsa.application.record.CategoryPriceSummaryDTO;
+import com.henry.musinsa.application.dto.BrandSumPriceDTO;
+import com.henry.musinsa.application.dto.CategoryPriceDTO;
+import com.henry.musinsa.application.dto.CategoryPriceSummaryDTO;
 import com.henry.musinsa.domain.Product;
 import com.henry.musinsa.ports.out.ProductRepositoryPort;
 import java.util.List;
@@ -48,7 +47,7 @@ public class ProductRepositoryAdapter implements ProductRepositoryPort {
     public List<Product> saveAll(List<Product> productList) {
         List<ProductJPAEntity> productJPAEntityList = productMapper.toEntity(productList);
         List<ProductJPAEntity> savedEntityList = productJpaRepository.saveAll(productJPAEntityList);
-
+        productJpaRepository.flush();
         return productMapper.toDomain(savedEntityList);
     }
 
@@ -82,6 +81,23 @@ public class ProductRepositoryAdapter implements ProductRepositoryPort {
             log.error("findActiveBrandById error", e);
             throw e;
         }
+    }
+
+    @Override
+    public void flush() {
+        productJpaRepository.flush();
+    }
+
+    @Override
+    public List<Product> findMinPriceProductsByCategoryName(String categoryName) {
+        List<ProductJPAEntity> minPriceProduct = productJpaRepository.findMinPriceProductsByCategoryName(categoryName);
+        return productMapper.toDomain(minPriceProduct);
+    }
+
+    @Override
+    public List<Product> findMaxPriceProductsByCategoryName(String categoryName) {
+        List<ProductJPAEntity> maxPriceProduct = productJpaRepository.findMaxPriceProductsByCategoryName(categoryName);
+        return productMapper.toDomain(maxPriceProduct);
     }
 
 }

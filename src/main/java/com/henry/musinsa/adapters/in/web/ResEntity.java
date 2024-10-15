@@ -19,36 +19,13 @@ public class ResEntity {
         return ResponseEntity.status(HttpStatus.OK).body(t);
     }
 
-    public static <T> ResponseEntity<?> success(String code, String message, T t) {
-        HashMap<String, Object> returnMap = new HashMap<>();
-        returnMap.put("code", code);
-        returnMap.put("message", message);
-        returnMap.put("data", t);
 
-        return ResponseEntity.status(HttpStatus.OK).body(returnMap);
-    }
-
-    public static <T> ResponseEntity<?> success(T a, T b) {
-        HashMap<String, Object> returnMap = new HashMap<>();
-        returnMap.put("code", a);
-        returnMap.put("message", b);
-
-        return ResponseEntity.status(HttpStatus.OK).body(returnMap);
-    }
-
-    public static <T> ResponseEntity<?> fail(T a, T b) {
-        HashMap<String, T> returnMap = new HashMap<>();
-        returnMap.put("code", a);
-        returnMap.put("message", b);
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(returnMap);
+    public static <T> ResponseEntity<?> fail(T t) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(t);
     }
 
     public static <T> ResponseEntity<?> error(T t) {
-        HashMap<String, T> returnMap = new HashMap<>();
-        returnMap.put("message", t);
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(returnMap);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(t);
     }
 
     public static <T> ResponseEntity<?> error(T a, T b) {

@@ -42,7 +42,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     public List<User> saveAll(List<User> userList) {
         List<UserJPAEntity> userJPAEntityList = userMapper.toEntity(userList);
         List<UserJPAEntity> savedEntityList = userJpaRepository.saveAll(userJPAEntityList);
-
+        userJpaRepository.flush();
         return userMapper.toDomain(savedEntityList);
     }
 
@@ -50,6 +50,11 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     public Optional<User> findAdmin() {
         Optional<UserJPAEntity> userOptional = userJpaRepository.findAdmin();
         return userOptional.map(userMapper::toDomain);
+    }
+
+    @Override
+    public void flush() {
+        userJpaRepository.flush();
     }
 
 }

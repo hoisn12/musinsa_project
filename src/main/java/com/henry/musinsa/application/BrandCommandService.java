@@ -1,7 +1,7 @@
 package com.henry.musinsa.application;
 
-import com.henry.musinsa.application.record.BrandCreateDTO;
-import com.henry.musinsa.application.record.BrandUpdateDTO;
+import com.henry.musinsa.application.dto.BrandCreateDTO;
+import com.henry.musinsa.application.dto.BrandUpdateDTO;
 import com.henry.musinsa.common.ErrorCode;
 import com.henry.musinsa.common.StringCustomUtils;
 import com.henry.musinsa.common.exception.ApplicationException;

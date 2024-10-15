@@ -1,7 +1,9 @@
 package com.henry.musinsa.ports.in;
 
-import com.henry.musinsa.application.record.BrandSumPriceSummaryDTO;
-import com.henry.musinsa.application.record.CategoryPriceSummaryDTO;
+import com.henry.musinsa.application.dto.BrandSumPriceSummaryDTO;
+import com.henry.musinsa.application.dto.CategoryPriceSummaryDTO;
+import com.henry.musinsa.application.dto.ProductLowestAndHighestDTO;
+import com.henry.musinsa.application.dto.ProductLowestAndHighestResponseDTO;
 import com.henry.musinsa.domain.Product;
 import java.util.List;
 import java.util.Optional;
@@ -12,5 +14,5 @@ public interface ProductQueryUseCase {
     Optional<Product> getProductById(String id);
     CategoryPriceSummaryDTO getLowestPriceByCategoryAndBrandUseCase();
     BrandSumPriceSummaryDTO getLowestPriceForAllCategoriesByBrand();
-    List<Product> getLowestAndHighestPriceBrandsByCategory();
+    ProductLowestAndHighestResponseDTO getLowestAndHighestPriceBrandsByCategory(String categoryName);
 }

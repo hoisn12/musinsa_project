@@ -1,16 +1,12 @@
 package com.henry.musinsa.application;
 
-import com.henry.musinsa.application.record.ProductCreateDTO;
-import com.henry.musinsa.application.record.ProductUpdateDTO;
+import com.henry.musinsa.application.dto.ProductCreateDTO;
+import com.henry.musinsa.application.dto.ProductUpdateDTO;
 import com.henry.musinsa.common.ErrorCode;
-import com.henry.musinsa.common.StringCustomUtils;
 import com.henry.musinsa.common.exception.ApplicationException;
-import com.henry.musinsa.domain.Brand;
 import com.henry.musinsa.domain.Product;
 import com.henry.musinsa.ports.in.ProductCommandUseCase;
 import com.henry.musinsa.ports.out.ProductRepositoryPort;
-import java.text.ParseException;
-import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,7 +58,7 @@ public class ProductCommandService implements ProductCommandUseCase {
     @Override
     @Transactional
     public void deleteProduct(String productId) {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new ApplicationException(ErrorCode.PRODUCT_NOT_FOUND));
+        Product product = productRepository.findActiveProductById(productId).orElseThrow(() -> new ApplicationException(ErrorCode.PRODUCT_NOT_FOUND));
         product.delete();
         productRepository.save(product);
     }

@@ -10,4 +10,5 @@ public interface UserRepositoryPort {
     Optional<User> findAdmin();
     User save(User user);
     List<User> saveAll(List<User> userList);
+    void flush();
 }

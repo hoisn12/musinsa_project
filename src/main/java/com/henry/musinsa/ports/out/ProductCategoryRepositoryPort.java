@@ -9,4 +9,5 @@ public interface ProductCategoryRepositoryPort {
     Optional<ProductCategory> findById(String id);
     ProductCategory save(ProductCategory product);
     List<ProductCategory> saveAll(List<ProductCategory> product);
+    void flush();
 }

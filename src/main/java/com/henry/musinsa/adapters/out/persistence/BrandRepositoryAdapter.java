@@ -60,4 +60,8 @@ public class BrandRepositoryAdapter implements BrandRepositoryPort {
         }
     }
 
+    @Override
+    public void flush() {
+        brandJpaRepository.flush();
+    }
 }

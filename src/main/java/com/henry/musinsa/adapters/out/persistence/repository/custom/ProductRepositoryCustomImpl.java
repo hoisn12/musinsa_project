@@ -5,13 +5,12 @@ import static com.henry.musinsa.adapters.out.persistence.entity.QProductJPAEntit
 import static com.henry.musinsa.adapters.out.persistence.entity.QProductCategoryJPAEntity.productCategoryJPAEntity;
 import static com.henry.musinsa.adapters.out.persistence.entity.QBrandJPAEntity.brandJPAEntity;
 
-import com.henry.musinsa.adapters.out.persistence.entity.BrandJPAEntity;
 import com.henry.musinsa.adapters.out.persistence.entity.ProductJPAEntity;
 
 import com.henry.musinsa.adapters.out.persistence.entity.QBrandJPAEntity;
 import com.henry.musinsa.adapters.out.persistence.entity.QProductJPAEntity;
-import com.henry.musinsa.application.record.BrandSumPriceDTO;
-import com.henry.musinsa.application.record.CategoryPriceDTO;
+import com.henry.musinsa.application.dto.BrandSumPriceDTO;
+import com.henry.musinsa.application.dto.CategoryPriceDTO;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -87,16 +86,43 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     }
 
     @Override
-    public List<ProductJPAEntity> findLowestAndHighestPriceBrandsByCategory() {
-        return List.of();
+    public List<ProductJPAEntity> findMaxPriceProductsByCategoryName(String categoryName) {
+
+         Double maxPrice = queryFactory.select(productJPAEntity.salePrice.max())
+                 .from(productJPAEntity)
+                .join(productJPAEntity.category, productCategoryJPAEntity)
+                .where(productJPAEntity.isDel.isFalse())
+                .where(productCategoryJPAEntity.title.eq(categoryName))
+                 .fetchOne();
+
+        return queryFactory.selectFrom(productJPAEntity)
+                .join(productJPAEntity.category, productCategoryJPAEntity)
+                .join(productJPAEntity.brand, brandJPAEntity)
+                .where(brandJPAEntity.isDel.isFalse())
+                .where(productJPAEntity.isDel.isFalse())
+                .where(productCategoryJPAEntity.title.eq(categoryName))
+                .where(productJPAEntity.salePrice.eq(maxPrice))
+                .fetch();
     }
 
     @Override
-    public Long updateProduct(ProductJPAEntity updateProductEntity) {
-        return queryFactory.update(productJPAEntity)
-                .set(productJPAEntity, updateProductEntity)
-                .where(productJPAEntity.id.eq(updateProductEntity.getId()))
+    public List<ProductJPAEntity> findMinPriceProductsByCategoryName(String categoryName) {
+
+        Double minPrice = queryFactory.select(productJPAEntity.salePrice.min())
+                .from(productJPAEntity)
+                .join(productJPAEntity.category, productCategoryJPAEntity)
                 .where(productJPAEntity.isDel.isFalse())
-                .execute();
+                .where(productCategoryJPAEntity.title.eq(categoryName))
+                .fetchOne();
+
+        return queryFactory.selectFrom(productJPAEntity)
+                .join(productJPAEntity.category, productCategoryJPAEntity)
+                .join(productJPAEntity.brand, brandJPAEntity)
+                .where(brandJPAEntity.isDel.isFalse())
+                .where(productJPAEntity.isDel.isFalse())
+                .where(productCategoryJPAEntity.title.eq(categoryName))
+                .where(productJPAEntity.salePrice.eq(minPrice))
+                .fetch();
     }
+
 }

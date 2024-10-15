@@ -8,6 +8,8 @@ import com.henry.musinsa.ports.in.ProductCategoryQueryUseCase;
 import com.henry.musinsa.ports.out.ProductCategoryRepositoryPort;
 import com.henry.musinsa.ports.out.ProductRepositoryPort;
 import jakarta.persistence.EntityNotFoundException;
+
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,14 @@ public class ProductCategoryQueryService implements ProductCategoryQueryUseCase 
     private final ProductCategoryRepositoryPort productCategoryRepository;
 
     @Override
-    public ProductCategory getProductCategory(String id) {
+    public List<ProductCategory> getAllCategory() {
+        return productCategoryRepository.findAll();
+    }
+
+    @Override
+    public ProductCategory getProductCategory(String id) throws ApplicationException {
         return productCategoryRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.PRODUCT_CATEGORY_NOT_FOUND));
     }
+
 
 }

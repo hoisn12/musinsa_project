@@ -1,8 +1,9 @@
 package com.henry.musinsa.adapters.in.web;
 
-import com.henry.musinsa.application.record.BrandCreateDTO;
-import com.henry.musinsa.application.record.BrandCreateResponseDTO;
-import com.henry.musinsa.application.record.BrandUpdateDTO;
+import com.henry.musinsa.application.dto.BrandCreateDTO;
+import com.henry.musinsa.application.dto.BrandCreateResponseDTO;
+import com.henry.musinsa.application.dto.BrandUpdateDTO;
+import com.henry.musinsa.common.ErrorCode;
 import com.henry.musinsa.common.StringCustomUtils;
 import com.henry.musinsa.domain.Brand;
 import com.henry.musinsa.ports.in.BrandCommandUseCase;
@@ -49,6 +50,9 @@ public class BrandController {
 
     @DeleteMapping("/{brandId}")
     public ResponseEntity<?> deleteBrand(@PathVariable("brandId") String brandId) {
+        if(null == brandId) {
+            return ResEntity.fail(ErrorCode.BRAND_NOT_FOUND);
+        }
         brandCommandUseCase.deleteBrand(brandId);
         return ResEntity.success();
     }

@@ -1,8 +1,8 @@
 package com.henry.musinsa.application;
 
 import com.henry.musinsa.adapters.out.persistence.mappers.ProductMapper;
-import com.henry.musinsa.application.record.CategoryPriceDTO;
-import com.henry.musinsa.application.record.CategoryPriceSummaryDTO;
+import com.henry.musinsa.application.dto.CategoryPriceDTO;
+import com.henry.musinsa.application.dto.CategoryPriceSummaryDTO;
 import com.henry.musinsa.domain.Product;
 import com.henry.musinsa.ports.out.ProductRepositoryPort;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;

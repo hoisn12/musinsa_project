@@ -1,6 +1,5 @@
-package com.henry.musinsa.application.record;
+package com.henry.musinsa.application.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
