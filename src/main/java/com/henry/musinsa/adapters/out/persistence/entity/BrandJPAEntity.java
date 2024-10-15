@@ -68,7 +68,6 @@ public class BrandJPAEntity extends CommonEntity {
     @Column(name = "is_private_brand")
     private Boolean isPrivateBrand;
 
-    @Builder.Default
     @Version
-    private Long version = 0L;
+    private Long version;
 }

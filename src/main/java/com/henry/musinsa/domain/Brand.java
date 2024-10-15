@@ -30,8 +30,18 @@ public class Brand {
     @Default
     private Boolean isPrivateBrand = false;
 
+    private Long version;
+
     public void delete() {
         this.isDel = true;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void changeJoinDate(LocalDate joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    public void changeEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 }

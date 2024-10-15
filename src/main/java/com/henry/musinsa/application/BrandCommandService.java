@@ -2,6 +2,7 @@ package com.henry.musinsa.application;
 
 import com.henry.musinsa.application.dto.BrandCreateDTO;
 import com.henry.musinsa.application.dto.BrandUpdateDTO;
+import com.henry.musinsa.application.mappers.BrandUpdateMapper;
 import com.henry.musinsa.common.ErrorCode;
 import com.henry.musinsa.common.StringCustomUtils;
 import com.henry.musinsa.common.exception.ApplicationException;
@@ -12,12 +13,14 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Service
 @RequiredArgsConstructor
 public class BrandCommandService implements BrandCommandUseCase {
 
     private final BrandRepositoryPort brandRepository;
+    private final BrandUpdateMapper brandUpdateMapper;
 
     @Override
     public Brand createBrand(BrandCreateDTO brandCreateDTO) {
@@ -45,17 +48,21 @@ public class BrandCommandService implements BrandCommandUseCase {
             throw new ApplicationException(ErrorCode.CREATE_BRAND_DATA_EMPTY);
         }
 
-        brandRepository.findActiveBrandById(brandUpdateDTO.getId()).orElseThrow(() -> new ApplicationException(ErrorCode.BRAND_NOT_FOUND));
+        Brand originBrand = brandRepository.findActiveBrandById(brandUpdateDTO.getId()).orElseThrow(() -> new ApplicationException(ErrorCode.BRAND_NOT_FOUND));
 
         try {
-            LocalDate joinDate = StringCustomUtils.getLocalDateForgetFormatter(brandUpdateDTO.getJoinDate());
 
-            Brand createBrand = Brand.builder()
-                    .id(brandUpdateDTO.getId())
-                    .title(brandUpdateDTO.getTitle())
-                    .joinDate(joinDate)
-                    .isPrivateBrand(brandUpdateDTO.getIsPrivateBrand())
-                    .isLocalDelivery(brandUpdateDTO.getIsLocalDelivery()).build();
+            Brand createBrand = brandUpdateMapper.toUpdateDomain(originBrand, brandUpdateDTO);
+
+            LocalDate joinDate = StringCustomUtils.getLocalDateForgetFormatter(brandUpdateDTO.getJoinDate());
+            LocalDate endDate = null;
+            if(!ObjectUtils.isEmpty(brandUpdateDTO.getEndDate())){
+                endDate = StringCustomUtils.getLocalDateForgetFormatter(brandUpdateDTO.getEndDate());
+            }
+
+            createBrand.changeJoinDate(joinDate);
+            createBrand.changeEndDate(endDate);
+
             return brandRepository.save(createBrand);
         } catch (ParseException e) {
             throw new ApplicationException(ErrorCode.DATE_FORMAT_MISMATCH);

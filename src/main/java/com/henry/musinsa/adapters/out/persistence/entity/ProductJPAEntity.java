@@ -17,7 +17,9 @@ import org.springframework.util.ObjectUtils;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "product",indexes = {
-        @Index(name = "product_id_idx", columnList = "id", unique = true)
+        @Index(name = "product_id_idx", columnList = "id", unique = true),
+        @Index(name = "product_brand_id_idx", columnList = "brand_id"),
+        @Index(name = "product_category_id_idx", columnList = "category_id")
 })
 public class ProductJPAEntity extends CommonEntity {
     @PrePersist
@@ -43,15 +45,14 @@ public class ProductJPAEntity extends CommonEntity {
     @Column(name = "is_del", columnDefinition = "boolean default false")
     private Boolean isDel = false;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private BrandJPAEntity brand;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private ProductCategoryJPAEntity category;
 
-    @Default
     @Version
-    private Long version = 0L;
+    private Long version;
 }

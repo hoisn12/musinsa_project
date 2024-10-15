@@ -9,6 +9,7 @@ public record BrandCreateResponseDTO(
         String brandTitle,
         String description,
         String joinDate,
+        String endDate,
         Boolean localDelivery,
         Boolean privateBrand
 ) {

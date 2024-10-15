@@ -15,6 +15,8 @@ public class BrandUpdateDTO {
         @NotBlank(message = "날짜는 필수입니다.")
         @Pattern(regexp = "\\d{4}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$", message = "날짜형식(yyyyMMdd)이 일치해야 합니다.")
         private String joinDate;
+        @Pattern(regexp = "\\d{4}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$", message = "날짜형식(yyyyMMdd)이 일치해야 합니다.")
+        private String endDate;
         private Boolean isLocalDelivery = false;
         private Boolean isPrivateBrand = true;
 }

@@ -75,16 +75,12 @@
   <!-- 쿼리문 수행시간 로깅 여부 -->
   <logger name="jdbc.sqltiming" level="OFF"/>
   <!-- ResultSet외 모든 JDBC 호출 정보 로깅할지 여부 -->
-  <logger name="jdbc.audit" level="INFO"/>
+  <logger name="jdbc.audit" level="OFF"/>
   <!-- connection open close 로깅 여부 -->
   <logger name="jdbc.connection" level="OFF"/>
 
   <!-- Default 세팅 -->
   <root level="${LOG_LEVEL}">
     <appender-ref ref="CONSOLE"/>
-<!--    <springProfile name="dev || prod">-->
-<!--      <appender-ref ref="FILE"/>-->
-<!--      <appender-ref ref="Error"/>-->
-<!--    </springProfile>-->
   </root>
 </configuration>

@@ -3,6 +3,7 @@ package com.henry.musinsa.application;
 import com.henry.musinsa.application.dto.ProductCreateDTO;
 import com.henry.musinsa.application.dto.ProductUpdateDTO;
 import com.henry.musinsa.application.mappers.ProductCreateMapper;
+import com.henry.musinsa.application.mappers.ProductUpdateMapper;
 import com.henry.musinsa.common.ErrorCode;
 import com.henry.musinsa.common.exception.ApplicationException;
 import com.henry.musinsa.domain.Product;
@@ -22,6 +23,7 @@ public class ProductCommandService implements ProductCommandUseCase {
 
     private final ProductRepositoryPort productRepository;
     private final ProductCreateMapper productCreateMapper;
+    private final ProductUpdateMapper productUpdateMapper;
 
     @Override
     @Transactional
@@ -53,16 +55,8 @@ public class ProductCommandService implements ProductCommandUseCase {
             throw new ApplicationException(ErrorCode.CREATE_BRAND_DATA_EMPTY);
         }
 
-        productRepository.findActiveProductById(productUpdateDTO.getId()).orElseThrow(() -> new ApplicationException(ErrorCode.PRODUCT_NOT_FOUND));
-
-        Product updateProduct = Product.builder()
-                .id(productUpdateDTO.getId())
-                .title(productUpdateDTO.getTitle())
-                .price(productUpdateDTO.getPrice())
-                .salePrice(productUpdateDTO.getSalePrice())
-                .brand(productUpdateDTO.getBrand())
-                .category(productUpdateDTO.getCategory())
-                .build();
+        Product originProduct = productRepository.findActiveProductById(productUpdateDTO.getId()).orElseThrow(() -> new ApplicationException(ErrorCode.PRODUCT_NOT_FOUND));
+        Product updateProduct = productUpdateMapper.toUpdateDomain(originProduct, productUpdateDTO);
 
         return productRepository.save(updateProduct);
     }

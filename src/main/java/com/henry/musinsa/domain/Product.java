@@ -23,7 +23,8 @@ public class Product {
     private Long updaterId;
     @Default
     private LocalDateTime updatedAt = LocalDateTime.now();
-    
+
+    private Long version;
     public void delete() {
         this.isDel = true;
         this.updatedAt = LocalDateTime.now();

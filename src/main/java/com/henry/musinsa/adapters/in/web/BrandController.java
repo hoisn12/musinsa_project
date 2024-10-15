@@ -10,6 +10,7 @@ import com.henry.musinsa.ports.in.BrandCommandUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -43,6 +44,7 @@ public class BrandController {
                 .brandId(result.getId())
                 .description(result.getDescription())
                 .joinDate(StringCustomUtils.localDateToString(result.getJoinDate(), "yyyyMMdd"))
+                .endDate(!ObjectUtils.isEmpty(result.getEndDate()) ? StringCustomUtils.localDateToString(result.getEndDate(), "yyyyMMdd") : null)
                 .localDelivery(result.getIsLocalDelivery())
                 .privateBrand(result.getIsPrivateBrand()).build());
 

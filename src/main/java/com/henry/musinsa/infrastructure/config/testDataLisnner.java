@@ -78,7 +78,6 @@ public class testDataLisnner {
                                 .build());
 
                 List<Brand> savedBrandList = brandRepository.saveAll(brandList);
-                brandRepository.flush();
                 // 카테고리
                 List<ProductCategory> categoryList = new ArrayList<>();
                 categoryList.add(ProductCategory.builder().title("상의").creatorId(user.getId()).updaterId(user.getId()).build());
@@ -91,7 +90,6 @@ public class testDataLisnner {
                 categoryList.add(ProductCategory.builder().title("액세서리").creatorId(user.getId()).updaterId(user.getId()).build());
 
                 List<ProductCategory> savedCategoryList = productCategoryRepository.saveAll(categoryList);
-                productCategoryRepository.flush();
 
                 Brand brandA = savedBrandList.stream().filter(brand -> "A".equals(brand.getTitle())).findFirst().orElseThrow();
                 Brand brandB = savedBrandList.stream().filter(brand -> "B".equals(brand.getTitle())).findFirst().orElseThrow();
