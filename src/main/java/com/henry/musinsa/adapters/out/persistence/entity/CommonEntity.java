@@ -13,8 +13,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class CommonEntity {

@@ -11,4 +11,5 @@ public interface BrandRepositoryPort {
     Optional<Brand> findById(String id);
     Brand save(Brand brand);
     List<Brand> saveAll(List<Brand> brands);
+    Optional<Brand> findActiveBrandById(String id);
 }

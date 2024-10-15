@@ -8,9 +8,11 @@ import com.henry.musinsa.ports.out.BrandRepositoryPort;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class BrandRepositoryAdapter implements BrandRepositoryPort {
@@ -43,6 +45,19 @@ public class BrandRepositoryAdapter implements BrandRepositoryPort {
         List<BrandJPAEntity> brandJPAEntityList = brandMapper.toEntity(brandList);
         List<BrandJPAEntity> savedEntityList = brandJpaRepository.saveAll(brandJPAEntityList);
         return brandMapper.toDomain(savedEntityList);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Brand> findActiveBrandById(String id) {
+        try {
+
+            BrandJPAEntity brandJPAEntity = brandJpaRepository.findByIdAndIsDel(id, false);
+            return Optional.ofNullable(brandMapper.toDomain(brandJPAEntity));
+        } catch (Exception e) {
+            log.error("findActiveBrandById error", e);
+            throw e;
+        }
     }
 
 }

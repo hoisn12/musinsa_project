@@ -18,7 +18,6 @@ public class Brand {
     private Boolean isDel = false;
     private LocalDate joinDate;
     private LocalDate endDate;
-    private String country;
     private Long creatorId;
     @Default
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -27,7 +26,12 @@ public class Brand {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @Default
-    private boolean isLocalDelivery = true;
+    private Boolean isLocalDelivery = true;
     @Default
-    private boolean isPrivateBrand = false;
+    private Boolean isPrivateBrand = false;
+
+    public void delete() {
+        this.isDel = true;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

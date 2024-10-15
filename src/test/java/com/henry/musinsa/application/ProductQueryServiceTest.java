@@ -55,7 +55,7 @@ class ProductQueryServiceTest {
         CategoryPriceDTO mockCategoryPrice2 = CategoryPriceDTO.builder().categoryTitle("product 2").brandTitle("brand 2").price(9000.0).build();
         Double sumPrice = mockCategoryPrice1.price() + mockCategoryPrice2.price();
         CategoryPriceSummaryDTO mockCategoryPriceSummary =  CategoryPriceSummaryDTO.builder()
-                .categoryPriceDTOList(List.of(mockCategoryPrice1, mockCategoryPrice2))
+                .categoryPriceList(List.of(mockCategoryPrice1, mockCategoryPrice2))
                 .sumPrice(sumPrice)
                 .build();
         when(productRepository.findLowestPriceByCategoryAndBrand()).thenReturn(mockCategoryPriceSummary);
@@ -65,11 +65,11 @@ class ProductQueryServiceTest {
 
         // then
         assertNotNull(categoryPriceSummaryDTO);
-        assertNotNull(categoryPriceSummaryDTO.categoryPriceDTOList());
+        assertNotNull(categoryPriceSummaryDTO.categoryPriceList());
         assertNotNull(categoryPriceSummaryDTO.sumPrice());
         assertEquals(categoryPriceSummaryDTO.sumPrice(),
-                categoryPriceSummaryDTO.categoryPriceDTOList().stream().mapToDouble(CategoryPriceDTO::price).sum());
-        assertEquals(mockCategoryPriceSummary.categoryPriceDTOList().size(), categoryPriceSummaryDTO.categoryPriceDTOList().size());
+                categoryPriceSummaryDTO.categoryPriceList().stream().mapToDouble(CategoryPriceDTO::price).sum());
+        assertEquals(mockCategoryPriceSummary.categoryPriceList().size(), categoryPriceSummaryDTO.categoryPriceList().size());
         verify(productRepository, times(1)).findLowestPriceByCategoryAndBrand();
     }
 
@@ -81,7 +81,7 @@ class ProductQueryServiceTest {
         CategoryPriceDTO mockCategoryPrice2 = CategoryPriceDTO.builder().categoryTitle("product 2").brandTitle("brand 2").price(9000.0).build();
         Double sumPrice = mockCategoryPrice1.price() + mockCategoryPrice2.price();
         CategoryPriceSummaryDTO mockCategoryPriceSummary =  CategoryPriceSummaryDTO.builder()
-                .categoryPriceDTOList(List.of(mockCategoryPrice1, mockCategoryPrice2))
+                .categoryPriceList(List.of(mockCategoryPrice1, mockCategoryPrice2))
                 .sumPrice(sumPrice)
                 .build();
         when(productRepository.findLowestPriceByCategoryAndBrand()).thenReturn(mockCategoryPriceSummary);
@@ -91,11 +91,11 @@ class ProductQueryServiceTest {
 
         // then
         assertNotNull(categoryPriceSummaryDTO);
-        assertNotNull(categoryPriceSummaryDTO.categoryPriceDTOList());
+        assertNotNull(categoryPriceSummaryDTO.categoryPriceList());
         assertNotNull(categoryPriceSummaryDTO.sumPrice());
         assertEquals(categoryPriceSummaryDTO.sumPrice(),
-                categoryPriceSummaryDTO.categoryPriceDTOList().stream().mapToDouble(CategoryPriceDTO::price).sum());
-        assertEquals(mockCategoryPriceSummary.categoryPriceDTOList().size(), categoryPriceSummaryDTO.categoryPriceDTOList().size());
+                categoryPriceSummaryDTO.categoryPriceList().stream().mapToDouble(CategoryPriceDTO::price).sum());
+        assertEquals(mockCategoryPriceSummary.categoryPriceList().size(), categoryPriceSummaryDTO.categoryPriceList().size());
         verify(productRepository, times(1)).findLowestPriceByCategoryAndBrand();
     }
 }

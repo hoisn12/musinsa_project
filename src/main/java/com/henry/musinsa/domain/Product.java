@@ -18,7 +18,14 @@ public class Product {
     private Boolean isDel = false;
     private ProductCategory category;
     private Long creatorId;
-    private LocalDateTime createdAt;
+    @Default
+    private LocalDateTime createdAt = LocalDateTime.now();
     private Long updaterId;
-    private LocalDateTime updatedAt;
+    @Default
+    private LocalDateTime updatedAt = LocalDateTime.now();
+    
+    public void delete() {
+        this.isDel = true;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

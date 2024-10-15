@@ -1,6 +1,12 @@
 package com.henry.musinsa.adapters.in.web;
 
-import com.henry.musinsa.application.record.CategoryPriceSummaryDTO;
+import com.henry.musinsa.application.record.BrandCreateDTO;
+import com.henry.musinsa.application.record.BrandCreateResponseDTO;
+import com.henry.musinsa.application.record.BrandUpdateDTO;
+import com.henry.musinsa.common.StringCustomUtils;
+import com.henry.musinsa.domain.Brand;
+import com.henry.musinsa.ports.in.BrandCommandUseCase;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,20 +16,40 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/brands")
 @SuppressWarnings("unused")
 public class BrandController {
+    private final BrandCommandUseCase brandCommandUseCase;
 
     @PostMapping
-    public ResponseEntity<?> createBrand() {
+    public ResponseEntity<?> createBrand(@Valid @RequestBody BrandCreateDTO brandCreateDTO) {
+        Brand result = brandCommandUseCase.createBrand(brandCreateDTO);
 
-        return ResEntity.success();
+        return ResEntity.success(BrandCreateResponseDTO.builder()
+                .brandId(result.getId())
+                .brandTitle(result.getTitle())
+                .brandId(result.getId())
+                .description(result.getDescription())
+                .joinDate(StringCustomUtils.localDateToString(result.getJoinDate(), "yyyyMMdd"))
+                .localDelivery(result.getIsLocalDelivery())
+                .privateBrand(result.getIsPrivateBrand()).build());
     }
 
     @PutMapping
-    public ResponseEntity<?> updateBrand() {
-        return ResEntity.success();
+    public ResponseEntity<?> updateBrand(@Valid @RequestBody BrandUpdateDTO brandUpdateDTO) {
+        Brand result = brandCommandUseCase.updateBrand(brandUpdateDTO);
+
+        return ResEntity.success(BrandCreateResponseDTO.builder()
+                .brandId(result.getId())
+                .brandTitle(result.getTitle())
+                .brandId(result.getId())
+                .description(result.getDescription())
+                .joinDate(StringCustomUtils.localDateToString(result.getJoinDate(), "yyyyMMdd"))
+                .localDelivery(result.getIsLocalDelivery())
+                .privateBrand(result.getIsPrivateBrand()).build());
+
     }
 
     @DeleteMapping("/{brandId}")
     public ResponseEntity<?> deleteBrand(@PathVariable("brandId") String brandId) {
+        brandCommandUseCase.deleteBrand(brandId);
         return ResEntity.success();
     }
 

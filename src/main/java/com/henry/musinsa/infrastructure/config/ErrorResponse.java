@@ -1,6 +1,10 @@
 package com.henry.musinsa.infrastructure.config;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.henry.musinsa.common.ErrorCode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,26 +17,28 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @Getter
 @SuppressWarnings("unused")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@JsonInclude(Include.NON_NULL)
 public class ErrorResponse {
 
     private String message;
+    @JsonProperty("details")
     private List<FieldError> details;
     private String code;
 
 
-    private ErrorResponse(final ResponseCode code, final List<FieldError> details) {
+    private ErrorResponse(final ErrorCode code, final List<FieldError> details) {
         this.message = code.getMessage();
         this.details = details;
         this.code = code.getCode();
     }
 
-    private ErrorResponse(final ResponseCode code) {
+    private ErrorResponse(final ErrorCode code) {
         this.message = code.getMessage();
         this.code = code.getCode();
         this.details = new ArrayList<>();
     }
 
-    private ErrorResponse(final ResponseCode code, final String message) {
+    private ErrorResponse(final ErrorCode code, final String message) {
         this.message = message;
 
         this.details = new ArrayList<>();
@@ -40,22 +46,22 @@ public class ErrorResponse {
     }
 
 
-    public static ErrorResponse of(final ResponseCode code, final BindingResult bindingResult) {
+    public static ErrorResponse of(final ErrorCode code, final BindingResult bindingResult) {
         return new ErrorResponse(code, FieldError.of(bindingResult));
     }
 
-    public static ErrorResponse of(final ResponseCode code) {
+    public static ErrorResponse of(final ErrorCode code) {
         return new ErrorResponse(code);
     }
 
-    public static ErrorResponse of(final ResponseCode code, final List<FieldError> details) {
+    public static ErrorResponse of(final ErrorCode code, final List<FieldError> details) {
         return new ErrorResponse(code, details);
     }
 
     public static ErrorResponse of(MethodArgumentTypeMismatchException e) {
         final String value = e.getValue() == null ? "" : e.getValue().toString();
         final List<FieldError> details = FieldError.of(e.getName(), value, e.getErrorCode());
-        return new ErrorResponse(ResponseCode.INVALID_INPUT_VALUE, details);
+        return new ErrorResponse(ErrorCode.INVALID_INPUT_VALUE, details);
     }
 
 

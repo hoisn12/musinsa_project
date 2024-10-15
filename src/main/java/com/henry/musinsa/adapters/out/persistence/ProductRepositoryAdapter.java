@@ -1,5 +1,6 @@
 package com.henry.musinsa.adapters.out.persistence;
 
+import com.henry.musinsa.adapters.out.persistence.entity.BrandJPAEntity;
 import com.henry.musinsa.adapters.out.persistence.entity.ProductJPAEntity;
 import com.henry.musinsa.adapters.out.persistence.mappers.ProductMapper;
 import com.henry.musinsa.adapters.out.persistence.repository.ProductJpaRepository;
@@ -11,9 +12,11 @@ import com.henry.musinsa.ports.out.ProductRepositoryPort;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class ProductRepositoryAdapter implements ProductRepositoryPort {
@@ -69,6 +72,16 @@ public class ProductRepositoryAdapter implements ProductRepositoryPort {
         List<ProductJPAEntity> productJPAEntityList = productJpaRepository.findLowestPriceForAllCategoriesByBrand(brandId);
 
         return productMapper.toDomain(productJPAEntityList);
+    }
+
+    public Optional<Product> findActiveProductById(String id) {
+        try {
+            ProductJPAEntity productJPAEntity = productJpaRepository.findByIdAndIsDel(id, false);
+            return Optional.ofNullable(productMapper.toDomain(productJPAEntity));
+        } catch (Exception e) {
+            log.error("findActiveBrandById error", e);
+            throw e;
+        }
     }
 
 }

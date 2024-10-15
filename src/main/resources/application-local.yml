@@ -14,9 +14,22 @@ spring:
     url: jdbc:h2:mem:musinsa
     username: muser
     password: muser
+    p6spy:
+      enable-logging: true
+      multiline: true
+      logging: slf4j
+      tracing:
+        include-parameter-values: true
   jpa:
     hibernate:
       ddl-auto: update #validate : table 검증
+
 logging:
   level:
     root: INFO
+
+# p6spy 관련
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true # 쿼리로그 끄고싶으면 OFF
