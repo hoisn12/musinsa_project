@@ -29,7 +29,7 @@ public class testDataLisnner {
     private final BrandRepositoryPort brandRepository;
     private final UserRepositoryPort userRepository;
 
-    @Value("${spring.config.activate.on-profile:local}")
+    @Value("${spring.profiles.active:local}")
     private String activateOnProfile;
 
     @EventListener

@@ -6,6 +6,8 @@
 
 상품 테이블, 브랜드 테이블, 카테고리 테이블이 있으며, 상품은 price(원가), sale_price(할인가) 가 있고 sale_price 기준으로 계산되었습니다.
 
+spring boot 3, JPA, queryDSL, mapStruct 가 사용되었습니다.
+
 빌드방법: 소스 폴더에서 ./gradlew build 
 
 실행방법: java -jar ./build/libs/musinsa-0.0.1-SNAPSHOT.jar  

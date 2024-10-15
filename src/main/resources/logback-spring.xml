@@ -67,11 +67,11 @@
 
 
   <!-- jdbc 로깅할지 여부 -->
-  <logger name="jdbc" level="INFO"/>
+  <logger name="jdbc" level="OFF"/>
   <!-- hibernate 로깅할지 여부 -->
-  <logger name="org.hibernate.SQL" level="INFO"/>
+  <logger name="org.hibernate.SQL" level="OFF"/>
   <!-- sql문만 로깅할지 여부 -->
-  <logger name="jdbc.sqlonly" level="INFO"/>
+  <logger name="jdbc.sqlonly" level="OFF"/>
   <!-- 쿼리문 수행시간 로깅 여부 -->
   <logger name="jdbc.sqltiming" level="OFF"/>
   <!-- ResultSet외 모든 JDBC 호출 정보 로깅할지 여부 -->
