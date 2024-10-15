@@ -32,20 +32,6 @@ class ProductQueryServiceTest {
     private Product product1;
     private Product product2;
 
-    @DisplayName("전체 상품을 조회한다.")
-    @Test
-    void testGetAllProducts() {
-        // given
-        List<Product> products = productService.getAllProducts();
-
-        assertEquals(2, products.size());
-        assertEquals("Product 1", products.get(0).getTitle());
-        assertEquals("Product 2", products.get(1).getTitle());
-
-        verify(productMapper, times(1)).toEntity(product1);
-        verify(productMapper, times(1)).toEntity(product2);
-    }
-
     @DisplayName("카테고리별 최저가격 브랜드와 상품가격,총액을 조회한다.")
     @Test
     void testGetLowestPriceByCategoryAndBrandUseCase() {

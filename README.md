@@ -4,6 +4,11 @@
 ### java: 17
 폴더 구조는 포트어댑터(핵사고날) 아키텍처 기반으로 설계하였습니다.
 
+빌드는 gradle build로 진행합니다. 
+테스트는 실행 후 기본포트 (8081)에서 진행 할 수 있습니다.
+상품 데이터는 app 실행시 자동으로 H2 database에 등록됩니다.
+
+
 구현 API
 카테고리 별 최저가격 브랜드와 상품 가격, 총액을 조회하는 API
 - GET http://localhost:8081/api/products/prices/lowest/category
@@ -61,3 +66,5 @@ body : {
 ### 상품삭제
 DELETE http://localhost:8081/api/products/4b22483081ee4d0ca6ebdd08fb06ac41
 
+### 카테고리 조회
+GET http://localhost:8081/api/category
