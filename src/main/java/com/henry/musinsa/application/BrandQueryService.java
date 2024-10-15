@@ -16,7 +16,7 @@ public class BrandQueryService implements BrandQueryUseCase {
 
     @Override
     public Brand getBrand(String id) throws ApplicationException{
-        return brandRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.BRAND_NOT_FOUND));
+        return brandRepository.findActiveBrandById(id).orElseThrow(() -> new ApplicationException(ErrorCode.BRAND_NOT_FOUND));
     }
 
 }
