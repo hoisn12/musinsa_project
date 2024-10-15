@@ -71,12 +71,12 @@ public class ProductQueryService implements ProductQueryUseCase {
         for(Product product : minProductList) {
             minBrandList.add(ProductLowestAndHighestResponseDTO.BrandPrice.builder()
                     .brandName(product.getBrand().getTitle())
-                    .price(product.getPrice()).build());
+                    .price(product.getSalePrice()).build());
         }
         for(Product product : maxProductList) {
             maxBrandList.add(ProductLowestAndHighestResponseDTO.BrandPrice.builder()
                     .brandName(product.getBrand().getTitle())
-                    .price(product.getPrice()).build());
+                    .price(product.getSalePrice()).build());
         }
 
         return ProductLowestAndHighestResponseDTO.builder()

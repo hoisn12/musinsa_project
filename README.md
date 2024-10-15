@@ -4,8 +4,10 @@
 ### java: 17
 폴더 구조는 포트어댑터(핵사고날) 아키텍처 기반으로 설계하였습니다.
 
-빌드는 gradle build로 진행합니다. 
-테스트는 실행 후 기본포트 (8081)에서 진행 할 수 있습니다.
+빌드방법:  소스 폴더에서 ./gradlew build 
+
+실행방법: java -jar ./build/libs/musinsa-0.0.1-SNAPSHOT.jar  
+
 상품 데이터는 app 실행시 자동으로 H2 database에 등록됩니다.
 
 
