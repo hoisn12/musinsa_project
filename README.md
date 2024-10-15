@@ -4,14 +4,16 @@
 ### java: 17
 폴더 구조는 포트어댑터(핵사고날) 아키텍처 기반으로 설계하였습니다.
 
-빌드방법:  소스 폴더에서 ./gradlew build 
+상품 테이블, 브랜드 테이블, 카테고리 테이블이 있으며, 상품은 price(원가), sale_price(할인가) 가 있고 sale_price 기준으로 계산되었습니다.
+
+빌드방법: 소스 폴더에서 ./gradlew build 
 
 실행방법: java -jar ./build/libs/musinsa-0.0.1-SNAPSHOT.jar  
 
 상품 데이터는 app 실행시 자동으로 H2 database에 등록됩니다.
 
 
-### 구현 API
+## 구현 API
 카테고리 별 최저가격 브랜드와 상품 가격, 총액을 조회하는 API
 - GET http://localhost:8081/api/products/prices/lowest/category
 
@@ -22,7 +24,7 @@
 - GET http://localhost:8081/api/products/category/lowhigh?name=상의
 
 브랜드 및 상품을 추가 / 업데이트 / 삭제하는 API
-## 브랜드
+### 브랜드
 ### 등록
 POST http://localhost:8081/api/brands
 body : {
@@ -43,7 +45,7 @@ body : {
 ### 삭제
 DELETE http://localhost:8081/api/brands/4b22483081ee4d0ca6ebdd08fb06ac41
 
-## 상품
+### 상품
 ### 상품등록
 POST http://localhost:8081/api/products
 body : {
