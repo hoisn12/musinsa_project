@@ -42,8 +42,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                 .where(productJPAEntity.category.eq(productCategoryJPAEntity))
                 .where(productJPAEntity.brand.eq(brandJPAEntity))
                 .where(productJPAEntity.isDel.isFalse())
-                .where(productJPAEntity.price.eq(
-                        JPAExpressions.select(productSub.price.min())
+                .where(productJPAEntity.salePrice.eq(
+                        JPAExpressions.select(productSub.salePrice.min())
                         .from(productSub)
                         .join(productSub.brand, brandSub)
                         .where(productSub.isDel.isFalse())
